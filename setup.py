@@ -10,7 +10,7 @@ setup(
     description="Bump a python version in python files. Create a new tag and push it to git repository.",
     url="https://github.com/aarhusstadsarkiv/stadsarkiv-client",
     author="Dennis Iversen",
-    author_email="deiv@aarhus.dk",
+    author_email="dennis.iversen@gmail.com",
     license="MIT",
     packages=find_packages(exclude=("tests",)),
     install_requires=REQUIREMENTS,
