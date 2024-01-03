@@ -22,14 +22,13 @@ It may bump the version in a `__init__.py` file (or similar) using a pyproject s
 version_file = "bump_py_version/__init__.py"
 ```
 
-**Note about `setup.py`**. `setup.py` should import the version from the package. In order to
-only have one python variable with the version number. It could looke something like this:
+**Note** about `setup.py`. `setup.py` should import the version from the `__init__.py` file. Example:
 
 ```python
 from bump_py_version import __version__
 ```
 
-If you have a pyproject file with a `project.version` or a `tool.poetry.version` then the script will bump these versions too. 
+If you have a pyproject file with a `project.version` or a `tool.poetry.version` section then the script will bump these versions too. 
 
 You may configure the script to alter text files (e.g. `README.md`) by setting the section `tool.bump_version.replace_patterns` in the `pyproject.toml` file. Example:
 
