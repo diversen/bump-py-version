@@ -1,7 +1,5 @@
 """
 This script is used to bump the version of the package.
-It will change the version in the pyproject.toml file,
-the __init__.py file and the README.md file.
 
 It will exit if there are uncommited changes to prevent
 accidental commits.
@@ -15,12 +13,9 @@ Usage:
 import sys
 import os
 import toml
-import re
-import logging
 import click
-
-
-logging.basicConfig(level=logging.DEBUG)
+import subprocess
+import sys
 
 
 def parse_version_tag(tag):
@@ -120,24 +115,37 @@ def alter_version(version):
         pass
 
 
-def bump_version(version):
-    # check if something needs to be commited
-    # if something needs to be commited, exit
-    if os.system("git diff-index --quiet HEAD --") != 0:
-        print("There are uncommited changes")
+def run_command(command):
+    # Here's a helper function because apparently, it's not obvious how to use subprocess
+    try:
+        subprocess.run(command, check=True, shell=True)
+    except subprocess.CalledProcessError as e:
+        print("You may have uncommited changes. Please commit them before running this script.")
+        print(f"Command failed: {e}")
         sys.exit(1)
 
-    # change the version in the files
+
+def bump_version(version):
+    # Check if there are uncommited changes
+    run_command("git diff-index --quiet HEAD --")
+
+    # Alter the version in the files
     alter_version(version)
 
-    # commit the changed files
-    os.system("git add .")
-    os.system(f'git commit -m "bump version to {version}"')
-    os.system("git push")
+    # Add the changes
+    run_command("git add .")
 
-    # create tag
-    os.system(f'git tag -a {version} -m "bump version to {version}"')
-    os.system("git push --tags")
+    # Commit the changes
+    run_command(f'git commit -m "bump version to {version}"')
+
+    # Push the changes
+    run_command("git push")
+
+    # Create a tag
+    run_command(f'git tag -a {version} -m "bump version to {version}"')
+
+    # Push the tag
+    run_command("git push --tags")
 
 
 @click.command()
