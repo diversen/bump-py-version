@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """
 This script is used to bump the version of the package.
 It will change the version in the pyproject.toml file,
@@ -10,7 +8,7 @@ accidental commits.
 
 Usage:
 
-    ./bin/tag.py <version>
+    bump-py-version <version>
 
 """
 
@@ -23,9 +21,6 @@ import click
 
 
 logging.basicConfig(level=logging.DEBUG)
-
-
-
 
 
 def parse_version_tag(tag):
@@ -126,7 +121,6 @@ def alter_version(version):
 
 
 def bump_version(version):
-
     # check if something needs to be commited
     # if something needs to be commited, exit
     if os.system("git diff-index --quiet HEAD --") != 0:
