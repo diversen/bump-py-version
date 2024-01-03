@@ -19,22 +19,19 @@ import os
 import toml
 import re
 import logging
+import click
 
 
 logging.basicConfig(level=logging.DEBUG)
 
 
-# get first argument as version
-try:
-    version = sys.argv[1]
-except IndexError:
-    print("No version provided")
-    print("Usage: ./bin/tag.py <version>")
-    sys.exit(1)
+
 
 
 def parse_version_tag(tag):
-    # Remove leading 'v' if it exists
+    """
+    Remove leading 'v' if it exists
+    """
     if tag.startswith("v"):
         return tag[1:]
 
@@ -128,20 +125,35 @@ def alter_version(version):
         pass
 
 
-# check if something needs to be commited
-# if something needs to be commited, exit
-if os.system("git diff-index --quiet HEAD --") != 0:
-    print("There are uncommited changes")
-    sys.exit(1)
+def bump_version(version):
 
-# change the version in the files
-alter_version(version)
+    # check if something needs to be commited
+    # if something needs to be commited, exit
+    if os.system("git diff-index --quiet HEAD --") != 0:
+        print("There are uncommited changes")
+        sys.exit(1)
 
-# commit the changed files
-os.system("git add .")
-os.system(f'git commit -m "bump version to {version}"')
-os.system("git push")
+    # change the version in the files
+    alter_version(version)
 
-# create tag
-os.system(f'git tag -a {version} -m "bump version to {version}"')
-os.system("git push --tags")
+    # commit the changed files
+    os.system("git add .")
+    os.system(f'git commit -m "bump version to {version}"')
+    os.system("git push")
+
+    # create tag
+    os.system(f'git tag -a {version} -m "bump version to {version}"')
+    os.system("git push --tags")
+
+
+@click.command()
+@click.argument("version")
+def cli(version):
+    """
+    Bump the version of the package
+    """
+    bump_version(version)
+
+
+if __name__ == "__main__":
+    cli()
