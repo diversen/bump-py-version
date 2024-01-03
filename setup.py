@@ -20,7 +20,12 @@ setup(
         ],
     },
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: MIT License",
+        "Intended Audience :: Developers",
+        "Natural Language :: English",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3.10",
     ],
