@@ -13,6 +13,8 @@ This is a simple and opinionated script to bump the version of a python package.
 <!-- LATEST-VERSION-PIPX -->
 	pipx install git+https://github.com/diversen/bump-py-version@v1.0.2
 
+## Configuration
+
 It may bump the version in a `__init__.py` file (or similar) using a pyproject settings like the following:
 
 ```toml
@@ -24,7 +26,6 @@ version_file = "bump_py_version/__init__.py"
 only have one python variable with the version number. Something like this:
 
 ```python
-from setuptools import setup
 from bump_py_version import __version__
 ```
 
@@ -46,7 +47,7 @@ replace = "\tpipx install git+https://github.com/diversen/bump-py-version@{versi
 
 The above will cause the line below the `search` string to be replaced with the `replace` string. Then it is easy to show the latest version of the package in a `README.md` file.
 
-## Usage
+## Usage example
 
 Example:
 
