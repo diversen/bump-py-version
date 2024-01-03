@@ -5,7 +5,7 @@ This is a simple and opinionated script to bump the version of a python package.
 ## Installation
 
 <!-- LATEST-VERSION-PIPX -->
-	pipx install git+https://github.com/diversen/bump-py-version@v0.0.6
+	pipx install git+https://github.com/diversen/bump-py-version@v0.0.7
 
 It may bump the version in a `__init__.py` file (or similar) a pyproject settings like the following:
 
