@@ -8,7 +8,7 @@ setup(
     name="bump-py-version",
     version=__version__,
     description="Bump a python version in python files. Create a new tag and push it to git repository.",
-    url="https://github.com/aarhusstadsarkiv/stadsarkiv-client",
+    url="https://github.com/diversen/bump-py-version",
     author="Dennis Iversen",
     author_email="dennis.iversen@gmail.com",
     license="MIT",
