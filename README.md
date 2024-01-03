@@ -2,6 +2,12 @@
 
 This is a simple and opinionated script to bump the version of a python package.
 
+1. The script will check for any changes in the git repository and abort if there are any.
+2. If there are no changes, it will alter files where a `version` is set, e.g. `pyproject.toml` or `__init__.py`. (Which files to alter are specified in the `pyproject.toml` file according to the `tool.bump_version` section.)
+3. The script commits and pushes the changes. 
+4. Then a new tag is created using the `version` tag specified.
+5. Finally the script pushes the tag to the remote repository.
+
 ## Installation
 
 <!-- LATEST-VERSION-PIPX -->
@@ -47,9 +53,3 @@ Example:
 ```bash
 bump-py-version v0.0.1
 ```
-
-1. The script will check for any changes in the git repository and abort if there are any.
-2. If there is no changes, it will alter the version as specified in the `pyproject.toml` file.
-3. The script commits and pushes the changes. 
-4. Then the script creates a new tag with the version number.
-5. Finally the script pushes the tag to the remote repository.
