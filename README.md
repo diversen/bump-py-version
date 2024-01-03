@@ -41,7 +41,7 @@ Then it is easy to show the latest version of the package in a README.md file.
 Example:
 
 ```bash
-bump-my-version v0.0.1
+bump-py-version v0.0.1
 ```
 
 1. The script will check for any changes in the git repository and abort if there are any.
