@@ -22,8 +22,8 @@ It may bump the version in a `__init__.py` file (or similar) using a pyproject s
 version_file = "bump_py_version/__init__.py"
 ```
 
-`setup.py` should import the version from the package (if you use a `setup.py` file). In order to
-only have one python variable with the version number. Something like this:
+**Note about `setup.py`**. `setup.py` should import the version from the package. In order to
+only have one python variable with the version number. It could looke something like this:
 
 ```python
 from bump_py_version import __version__
