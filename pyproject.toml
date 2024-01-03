@@ -1,6 +1,6 @@
 [project]
 name = "bump-py-version"
-version = "0.0.4"
+version = "0.0.6"
 
 [tool.black]
 line-length = 140
