@@ -10,7 +10,7 @@ This is a simple and opinionated script to bump the version of a python package.
 It may bump the version in a `__init__.py` file (or similar) using a pyproject settings like the following:
 
 ```toml
-[tool.bumptag]
+[tool.bump_version]
 version_file = "bump_py_version/__init__.py"
 ```
 
@@ -27,7 +27,7 @@ If you have a pyproject file with a `project.version` or a `tool.poetry.version`
 You may configure the script to alter text files (e.g. `README.md`). 
 
 ```toml
-[tool.bumptag.replace_patterns.pip]
+[tool.bump_version.replace_patterns.pip]
 file = "README.md"
 search = "<!-- LATEST-VERSION-PIP -->"
 replace = "\tpip install git+https://github.com/diversen/bump-py-version@{version}\n"

@@ -105,14 +105,14 @@ def alter_version(version):
 
     # Alter __init__.py
     try:
-        version_file = pyproject["tool"]["bumptag"]["version_file"]
+        version_file = pyproject["tool"]["bump_version"]["version_file"]
         alter_init(version_file, version)
     except KeyError:
         pass
 
     # Alter text files
     try:
-        replace_patterns = pyproject["tool"]["bumptag"]["replace_patterns"]
+        replace_patterns = pyproject["tool"]["bump_version"]["replace_patterns"]
         for _, pattern in replace_patterns.items():
             pattern["replace"] = pattern["replace"].replace("{version}", version)
             alter_text_file(pattern["file"], pattern["search"], pattern["replace"])

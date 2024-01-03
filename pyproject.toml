@@ -4,10 +4,10 @@ line-length = 140
 [tool.mypy]
 exclude = [ "venv",]
 
-[tool.bumptag]
+[tool.bump_version]
 version_file = "bump_py_version/__init__.py"
 
-[tool.bumptag.replace_patterns.pipx]
+[tool.bump_version.replace_patterns.pipx]
 file = "README.md"
 search = "<!-- LATEST-VERSION-PIPX -->"
 replace = "\tpipx install git+https://github.com/diversen/bump-py-version@{version}\n"
