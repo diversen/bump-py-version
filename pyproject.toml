@@ -6,7 +6,7 @@ version = "0.0.1"
 line-length = 140
 
 [tool.mypy]
-exclude = [ "venv", ]
+exclude = [ "venv",]
 
 [tool.bumptag]
 version_file = "bump_py_version/__init__.py"
