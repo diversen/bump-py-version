@@ -24,17 +24,21 @@ from bump_py_version import __version__
 
 If you have a pyproject file with a `project.version` or a `tool.poetry.version` then the script will bump these versions too. 
 
-You may configure the script to alter text files (e.g. `README.md`). 
+You may configure the script to alter text files (e.g. `README.md`) by setting the section `tool.bump_version.replace_patterns` in the `pyproject.toml` file. Example:
 
 ```toml
 [tool.bump_version.replace_patterns.pip]
 file = "README.md"
 search = "<!-- LATEST-VERSION-PIP -->"
 replace = "\tpip install git+https://github.com/diversen/bump-py-version@{version}\n"
+
+[tool.bump_version.replace_patterns.pipx]
+file = "README.md"
+search = "<!-- LATEST-VERSION-PIPX -->"
+replace = "\tpipx install git+https://github.com/diversen/bump-py-version@{version}\n"
 ```
 
-The above will cause the line below the `search` string to be replaced with the `replace` string.
-Then it is easy to show the latest version of the package in a README.md file.
+The above will cause the line below the `search` string to be replaced with the `replace` string. Then it is easy to show the latest version of the package in a `README.md` file.
 
 ## Usage
 
