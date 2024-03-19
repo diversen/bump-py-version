@@ -156,7 +156,7 @@ def run_command_check_uncommited():
             text=True,
         )
 
-    except subprocess.CalledProcessError as e:
+    except Exception:
         print(status_message)
         sys.exit(1)
 
@@ -165,14 +165,7 @@ def run_command(command):
 
     try:
         # Run the command and capture the output
-        subprocess.run(
-            command,
-            check=True,
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
+        subprocess.run(command, check=True, shell=True)
 
     except subprocess.CalledProcessError as e:
         # Append the exception message to the status message
