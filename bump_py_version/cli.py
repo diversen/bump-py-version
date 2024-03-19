@@ -15,7 +15,6 @@ import os
 import toml
 import click
 import subprocess
-import sys
 
 
 def parse_version_tag(tag):
@@ -115,19 +114,35 @@ def alter_version(version):
         pass
 
 
-def run_command(command):
-    # Here's a helper function because apparently, it's not obvious how to use subprocess
-    try:
-        subprocess.run(command, check=True, shell=True)
-    except subprocess.CalledProcessError as e:
-        print("You may have uncommited changes. Please commit them before running this script.")
-        print(f"Command failed: {e}")
+def run_command(command, check_untracked=False):
+    # Run the command and capture the output
+    result = subprocess.run(
+        command,
+        check=False,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    if check_untracked and result.stdout.strip():
+        # If there are untracked files, print a message and exit
+        status_message = "There are untracked files. Use `git status` to see the files. "
+        status_message+= "Please commit or stash them before running this script. "
+        # print("There are untracked files. Use `git status` to see the files" Please commit or stash them before running this script.")
+        print(status_message)
         sys.exit(1)
 
 
 def bump_version(version):
     # Check if there are uncommited changes
     run_command("git diff-index --quiet HEAD --")
+
+    # Check if there are files that are not tracked. If there are, exit
+    run_command(
+        "git ls-files --others --exclude-standard",
+        check_untracked=True,
+    )
 
     # Alter the version in the files
     alter_version(version)
