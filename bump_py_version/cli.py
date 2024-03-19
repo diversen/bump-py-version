@@ -114,35 +114,80 @@ def alter_version(version):
         pass
 
 
-def run_command(command, check_untracked=False):
-    # Run the command and capture the output
+def run_command_check_untracked():
+    """
+    function that checks if there are untracked files
+    """
+
+    status_message = "There are untracked files. "
+    status_message += "Use `git status` to see the files.\n"
+    status_message += "Please remove or commit the files before running the command. "
+
     result = subprocess.run(
-        command,
-        check=False,
+        "git ls-files --others --exclude-standard",
+        check=True,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
     )
 
-    if check_untracked and result.stdout.strip():
-        # If there are untracked files, print a message and exit
-        status_message = "There are untracked files. Use `git status` to see the files. "
-        status_message+= "Please commit or stash them before running this script. "
-        # print("There are untracked files. Use `git status` to see the files" Please commit or stash them before running this script.")
+    if result.stdout.strip():
         print(status_message)
         sys.exit(1)
 
 
+def run_command_check_uncommited():
+    """
+    function that checks if there are uncommited changes
+    """
+
+    status_message = "There are uncommited changes. "
+    status_message += "Use `git status` to see the changes.\n"
+    status_message += "Please commit the changes before running the command."
+
+    try:
+        subprocess.run(
+            "git diff-index --quiet HEAD --",
+            check=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+
+    except subprocess.CalledProcessError as e:
+        print(status_message)
+        sys.exit(1)
+
+
+def run_command(command):
+
+    try:
+        # Run the command and capture the output
+        subprocess.run(
+            command,
+            check=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+
+    except subprocess.CalledProcessError as e:
+        # Append the exception message to the status message
+        error_message = "Command execution failed: " + str(e)
+        print(error_message)
+        sys.exit(1)
+
+
 def bump_version(version):
-    # Check if there are uncommited changes
-    run_command("git diff-index --quiet HEAD --")
 
     # Check if there are files that are not tracked. If there are, exit
-    run_command(
-        "git ls-files --others --exclude-standard",
-        check_untracked=True,
-    )
+    run_command_check_untracked()
+
+    # Check if there are uncommited changes
+    run_command_check_uncommited()
 
     # Alter the version in the files
     alter_version(version)
