@@ -4,14 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bump-py-version"
-version = "1.2.3"
+version = "1.2.4"
 description = "Bump a python version in python files. Create a new tag and push it to git repository."
 readme = "README.md"
-dependencies = [
- "click==8.1.7",
- "toml==0.10.2",
- "types-toml==0.10.8.20240310",
-]
+dependencies = [ "click==8.1.7", "toml==0.10.2", "types-toml==0.10.8.20240310",]
 requires-python = ">=3.10"
 classifiers = [ "Development Status :: 5 - Production/Stable", "Environment :: Console", "Topic :: Utilities", "License :: OSI Approved :: MIT License", "Intended Audience :: Developers", "Natural Language :: English", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3.10",]
 [[project.authors]]
