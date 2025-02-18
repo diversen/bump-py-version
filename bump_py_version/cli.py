@@ -201,12 +201,31 @@ def bump_version(version):
     run_command("git push --tags")
 
 
-@click.command()
+def get_version():
+    """Reads version from pyproject.toml at runtime, only when needed."""
+    with open("pyproject.toml", "r") as f:
+        pyproject = toml.load(f)
+        return pyproject["project"]["version"]
+
+
+PACKAGE_NAME = "MyPackage"  # Your dynamic variable
+
+HELP = f"""Bump the version of a git-enabled python package
+
+Usage:
+
+bump-py-version <version>
+
+Version:
+
+{get_version()}
+"""
+
+@click.command(help=HELP)
+
 @click.argument("version")
 def cli(version):
-    """
-    Bump the version of the package
-    """
+
     bump_version(version)
 
 
