@@ -201,16 +201,6 @@ def bump_version(version):
     # Push the tag
     run_command("git push --tags")
 
-
-@click.command()
-@click.argument("version")
-def cli(version):
-    """
-    Bump the version of the package
-    """
-    bump_version(version)
-    exit(0)
-
 # add --version option
 @click.option("--version", is_flag=True, help="Print the version of the package")
 def cli():
@@ -220,6 +210,15 @@ def cli():
     print(__version__)
     exit(0)
 
+
+@click.command()
+@click.argument("version")
+def cli(version):
+    """
+    Bump the version of the package
+    """
+    bump_version(version)
+    exit(0)
 
 if __name__ == "__main__":
     cli()
