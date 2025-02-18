@@ -15,6 +15,7 @@ import os
 import toml
 import click
 import subprocess
+from bump_py_version import __version__
 
 
 def parse_version_tag(tag):
@@ -208,6 +209,16 @@ def cli(version):
     Bump the version of the package
     """
     bump_version(version)
+    exit(0)
+
+# add --version option
+@click.option("--version", is_flag=True, help="Print the version of the package")
+def cli():
+    """
+    Bump the version of the package
+    """
+    print(__version__)
+    exit(0)
 
 
 if __name__ == "__main__":
