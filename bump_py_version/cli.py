@@ -201,12 +201,23 @@ def bump_version(version):
     run_command("git push --tags")
 
 
+def get_version():
+    with open("pyproject.toml", "r") as f:
+        pyproject = toml.load(f)
+        return pyproject["project"]["version"]  # Direct access since we expect it to exist
+
+
 @click.command()
-@click.argument("version")
+@click.argument("version", required=False)
+@click.option("--version", is_flag=True, help="Show the version and exit.")
 def cli(version):
     """
     Bump the version of the package
     """
+    if version is None:
+        print(get_version())  # Print version when --version is used
+        return
+
     bump_version(version)
 
 
