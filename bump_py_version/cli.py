@@ -220,7 +220,13 @@ HELP = f"""Bump the version of a git-enabled python package. Version ({__version
 
 Usage:
 
-bump-py-version <version>""" # noqa
+bump-py-version <version>
+
+Example:
+
+bump-py-version v1.2.3
+
+""" # noqa
 
 
 @click.command(help=HELP)
