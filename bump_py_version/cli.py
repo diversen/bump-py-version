@@ -15,6 +15,7 @@ import os
 import toml
 import click
 import subprocess
+from bump_py_version import __version__
 
 
 def parse_version_tag(tag):
@@ -106,10 +107,17 @@ def alter_version(version):
 
     # Alter text files
     try:
-        replace_patterns = pyproject["tool"]["bump_version"]["replace_patterns"]
+        replace_patterns = pyproject["tool"]["bump_version"]["replace_patterns"]  # noqa
         for _, pattern in replace_patterns.items():
-            pattern["replace"] = pattern["replace"].replace("{version}", version)
-            alter_text_file(pattern["file"], pattern["search"], pattern["replace"])
+            pattern["replace"] = pattern["replace"].replace(
+                "{version}",
+                version,
+            )
+            alter_text_file(
+                pattern["file"],
+                pattern["search"],
+                pattern["replace"],
+            )
     except KeyError:
         pass
 
@@ -119,9 +127,9 @@ def run_command_check_untracked():
     function that checks if there are untracked files
     """
 
-    status_message = "There are untracked files. "
-    status_message += "Use `git status` to see the files.\n"
-    status_message += "Please remove or commit the files before running the command. "
+    status_message = """There are untracked files.
+Use `git status` to see the files.
+Please remove or commit the files before running the command."""
 
     result = subprocess.run(
         "git ls-files --others --exclude-standard",
@@ -208,24 +216,16 @@ def get_version():
         return pyproject["project"]["version"]
 
 
-PACKAGE_NAME = "MyPackage"  # Your dynamic variable
-
-HELP = f"""Bump the version of a git-enabled python package
+HELP = f"""Bump the version of a git-enabled python package. Version ({__version__}).
 
 Usage:
 
-bump-py-version <version>
+bump-py-version <version>""" # noqa
 
-Version:
-
-{get_version()}
-"""
 
 @click.command(help=HELP)
-
 @click.argument("version")
 def cli(version):
-
     bump_version(version)
 
 
