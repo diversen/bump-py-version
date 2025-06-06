@@ -11,7 +11,7 @@ This is a simple and opinionated script to bump the version of a python package.
 ## Installation
 
 <!-- LATEST-VERSION-PIPX -->
-	pipx install git+https://github.com/diversen/bump-py-version@v2.0.0
+	pipx install git+https://github.com/diversen/bump-py-version@v2.0.1
 
 ## Configuration
 
