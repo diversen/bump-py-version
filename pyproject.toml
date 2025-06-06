@@ -7,7 +7,12 @@ name = "bump-py-version"
 version = "2.0.1"
 description = "Bump a python version in python files. Create a new tag and push it to git repository."
 readme = "README.md"
-dependencies = ["click==8.1.7", "toml==0.10.2", "types-toml==0.10.8.20240310"]
+dependencies = [
+    "click==8.1.7",
+    "toml==0.10.2",
+    "tomlkit==0.13.3",
+    "types-toml==0.10.8.20240310",
+]
 requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
