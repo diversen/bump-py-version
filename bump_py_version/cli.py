@@ -1,6 +1,6 @@
 import sys
+import argparse
 import tomlkit
-import click
 import subprocess
 from bump_py_version import __version__
 
@@ -183,22 +183,19 @@ def get_version():
         return doc["project"]["version"]
 
 
-HELP = f"""Bump the version of a git-enabled python package. Version ({__version__}).
-
-Usage:
-
-    bump-py-version <version>
-
-Example:
+def cli():
+    parser = argparse.ArgumentParser(
+        prog="bump-py-version",
+        description=f"Bump the version of a git-enabled python package. Version ({__version__}).",
+        epilog="""Example:
 
     bump-py-version v1.2.3
-"""  # noqa
-
-
-@click.command(help=HELP)
-@click.argument("version")
-def cli(version):
-    bump_version(version)
+""",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("version", help="Version to bump to, e.g. v1.2.3 or 1.2.3")
+    args = parser.parse_args()
+    bump_version(args.version)
 
 
 if __name__ == "__main__":
