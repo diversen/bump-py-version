@@ -1,5 +1,6 @@
 import sys
 import argparse
+import shlex
 import tomlkit
 import subprocess
 from bump_py_version import __version__
@@ -149,7 +150,7 @@ def run_command(command):
         sys.exit(1)
 
 
-def bump_version(version):
+def bump_version(version, message=None):
     # Check if there are files that are not tracked. If there are, exit
     run_command_check_untracked()
 
@@ -169,7 +170,8 @@ def bump_version(version):
     run_command("git push")
 
     # Create a tag
-    run_command(f'git tag -a {version} -m "bump version to {version}"')
+    tag_message = message if message else f"bump version to {version}"
+    run_command(f"git tag -a {shlex.quote(version)} -m {shlex.quote(tag_message)}")
 
     # Push the tag
     run_command("git push --tags")
@@ -194,8 +196,12 @@ def cli():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("version", help="Version to bump to, e.g. v1.2.3 or 1.2.3")
+    parser.add_argument(
+        "--message",
+        help="Custom git tag message. Overrides the default tag message.",
+    )
     args = parser.parse_args()
-    bump_version(args.version)
+    bump_version(args.version, message=args.message)
 
 
 if __name__ == "__main__":
