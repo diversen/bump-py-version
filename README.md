@@ -45,3 +45,7 @@ Example:
 ```bash
 bump-py-version v1.2.3
 ```
+
+# License
+
+MIT © [Dennis Iversen](https://github.com/diversen)
