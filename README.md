@@ -12,6 +12,8 @@ This is a simple and opinionated python `tool` to bump the of a python package.
 
 ## Installation
 
+Install latest version:
+
 <!-- LATEST-VERSION-UV -->
 	uv tool install git+https://github.com/diversen/bump-py-version@v2.0.6
 
