@@ -24,9 +24,6 @@ def alter_pyproject(doc, version):
     if "project" in doc:
         doc["project"]["version"] = version
 
-    if "tool" in doc and "poetry" in doc["tool"]:
-        doc["tool"]["poetry"]["version"] = version
-
     with open("pyproject.toml", "w", encoding="utf-8") as f:
         f.write(tomlkit.dumps(doc))
 
