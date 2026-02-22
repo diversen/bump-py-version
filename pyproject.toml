@@ -48,5 +48,5 @@ version_file = "bump_py_version/__init__.py"
 
 [tool.bump_version.replace_patterns.pipx]
 file = "README.md"
-search = "<!-- LATEST-VERSION-PIPX -->"
-replace = "\tpipx install git+https://github.com/diversen/bump-py-version@{version}\n"
+search = "<!-- LATEST-VERSION-UV -->"
+replace = "\tuv tool install git+https://github.com/diversen/bump-py-version@{version}\n"
