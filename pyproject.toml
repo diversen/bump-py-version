@@ -44,6 +44,7 @@ exclude = ["venv"]
 
 [tool.bump_version]
 version_file = "bump_py_version/__init__.py"
+uv_lock = true
 
 [tool.bump_version.replace_patterns.pipx]
 file = "README.md"
