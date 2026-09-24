@@ -1,6 +1,7 @@
 import sys
 import argparse
 import shlex
+import shutil
 import tomlkit
 import subprocess
 from bump_py_version import __version__
@@ -150,7 +151,40 @@ def run_command(command):
         sys.exit(1)
 
 
+def check_uv_lock():
+    """Read the opt-in setting and check prerequisites before editing files."""
+    try:
+        with open("pyproject.toml", "r", encoding="utf-8") as f:
+            doc = tomlkit.parse(f.read())
+    except FileNotFoundError:
+        return False
+
+    enabled = doc.get("tool", {}).get("bump_version", {}).get("uv_lock", False)
+    if not isinstance(enabled, bool):
+        print("tool.bump_version.uv_lock must be true or false.")
+        sys.exit(1)
+    if not enabled:
+        return False
+
+    result = subprocess.run(["git", "check-ignore", "--quiet", "uv.lock"])
+    if result.returncode == 0:
+        print(
+            "uv.lock is ignored by Git. Remove uv.lock from .gitignore "
+            "(or the applicable Git ignore rules) before using uv_lock = true."
+        )
+        sys.exit(1)
+    if result.returncode != 1:
+        print("Could not check whether uv.lock is ignored by Git.")
+        sys.exit(1)
+    if shutil.which("uv") is None:
+        print("uv_lock = true requires uv to be installed and available on PATH.")
+        sys.exit(1)
+    return True
+
+
 def bump_version(version, message=None):
+    uv_lock = check_uv_lock()
+
     # Check if there are files that are not tracked. If there are, exit
     run_command_check_untracked()
 
@@ -159,6 +193,9 @@ def bump_version(version, message=None):
 
     # Alter the version in the files
     alter_version(version)
+
+    if uv_lock:
+        run_command("uv lock")
 
     # Add the changes
     run_command("git add .")
