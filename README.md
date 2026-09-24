@@ -12,10 +12,11 @@ This is a simple and opinionated python `tool` to bump the of a python package.
 
 ## Installation
 
-Install latest version:
+Install the latest version from PyPI with uv:
 
-<!-- LATEST-VERSION-UV -->
-	uv tool install git+https://github.com/diversen/bump-py-version@v2.1.1
+```bash
+uv tool install bump-py-version
+```
 
 ## Configuration
 
@@ -32,7 +33,7 @@ You may configure the script to alter text files (e.g. `README.md`) by setting t
 [tool.bump_version.replace_patterns.pipx]
 file = "README.md"
 search = "<!-- LATEST-VERSION-UV -->"
-replace = "\tuv tool install git+https://github.com/diversen/bump-py-version@{version}\n"
+replace = "\tuv tool install bump-py-version=={version}\n"
 
 ```
 

@@ -28,6 +28,7 @@ email = "dennis.iversen@gmail.com"
 
 [project.urls]
 Homepage = "https://github.com/diversen/bump-py-version"
+Documentation = "https://github.com/diversen/bump-py-version"
 
 [project.scripts]
 bump-py-version = "bump_py_version.cli:cli"
@@ -41,8 +42,3 @@ exclude = ["venv"]
 [tool.bump_version]
 version_file = "bump_py_version/__init__.py"
 uv_lock = true
-
-[tool.bump_version.replace_patterns.pipx]
-file = "README.md"
-search = "<!-- LATEST-VERSION-UV -->"
-replace = "\tuv tool install git+https://github.com/diversen/bump-py-version@{version}\n"
